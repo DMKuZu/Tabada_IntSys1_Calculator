@@ -45,16 +45,17 @@
                         Grid.Row="0" Grid.Column="0" 
                         VerticalAlignment="Top"
                         HorizontalAlignment="Left"
-                        Margin="8"
-                        Content="≡"
-                        FontSize="24"/>
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Margin="8">
+                    <Image Source="/Assets/list-icon.ico"/>
+                </Button>
                 <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Center">
                     History
                 </TextBlock>
                 <ListBox Name="ListHistory"
                          Grid.Row ="1" Grid.Column="1"
-                         SelectionMode="Single"
-                         IsVisible="False">
+                         SelectionMode="Single">
                     
                 </ListBox>
                 <Button Name="BtnClearHistory"
@@ -96,7 +97,9 @@
                 <!-- clear buttons -->
                 <Button Grid.Row="0" Grid.Column="0" Content="C" Name="BtnClear"/>
                 <Button Grid.Row="0" Grid.Column="1" Content="CE" Name="BtnClearEntry" />
-                <Button Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Content="DEL" Name="BtnBackSpace"/>
+                <Button Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Name="BtnBackSpace">
+                    <Image Source="/Assets/backspace-icon.ico" Width="40" Height="40" Stretch="Fill"/>
+                </Button>
                 <!-- numbers button  -->
                 <Button Grid.Row="1" Grid.Column="0" Content="7" Name="Btn7"/>
                 <Button Grid.Row="1" Grid.Column="1" Content="8" Name="Btn8"/>
