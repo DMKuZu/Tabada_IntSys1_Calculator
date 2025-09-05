@@ -3,10 +3,13 @@
         xmlns:vm="using:Tabada_IntSys1_Calculator.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="600"
+        x:CompileBindings="True"
+        Width="450" Height="600" Padding="8" FontFamily="Microsoft Sans Serif"
+        WindowStartupLocation="CenterScreen"
         x:Class="Tabada_IntSys1_Calculator.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/calculator-logo.ico"
         Title="Tabada_IntSys1_Calculator">
 
     <Design.DataContext>
@@ -15,6 +18,36 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <!--<TabControl>
+        ~1~ Our Simple ViewModel @1@
+        <TabItem Header="Simple ViewModel" >
+            <StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
+                <TextBlock>Enter your Name:</TextBlock>
+                <TextBox Text="{Binding Name}" />
+                <TextBox Text="{Binding Greeting, Mode=OneWay}"
+                         IsReadOnly="True"
+                         FontWeight="Bold" />
+            </StackPanel>
+        </TabItem>
 
+        ~1~ Our ReactiveViewModel @1@
+        <TabItem Header="Reactive UI" >
+            <StackPanel DataContext="{Binding ReactiveViewModel}" Spacing="10">
+                <TextBlock>Enter your Name:</TextBlock>
+                <TextBox Text="{Binding Name}" />
+                <TextBox Text="{Binding Greeting, Mode=OneWay}"
+                         IsReadOnly="True"
+                         FontWeight="Bold" />
+            </StackPanel>
+        </TabItem>
+    </TabControl>-->
+    
+    <StackPanel Orientation="Vertical" Spacing="8">
+        <TextBox Height="60" 
+                 FontSize="30" FontWeight="Bold" 
+                 IsReadOnly="True"/>
+        <TextBox Height="40"
+                 FontSize="24" FontWeight="Bold" />
+        
+    </StackPanel>
 </Window>
