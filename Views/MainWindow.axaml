@@ -3,14 +3,33 @@
         xmlns:vm="using:Tabada_IntSys1_Calculator.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="600"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="400"
         x:CompileBindings="True"
-        MinWidth="450" MinHeight="600" Padding="8" FontFamily="Microsoft Sans Serif"
+        MinHeight="550" MinWidth="400"
+        SizeToContent="WidthAndHeight" Padding="8" FontFamily="Microsoft Sans Serif"
         WindowStartupLocation="CenterScreen"
         x:Class="Tabada_IntSys1_Calculator.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/calculator-logo.ico"
+        Icon="/Assets/calculator-icon.ico"
         Title="Tabada_IntSys1_Calculator">
+   
+    <Window.Styles>
+        <Style Selector="SplitView">
+            <Setter Property="DisplayMode" Value="CompactOverlay"/>
+            <Setter Property="PanePlacement" Value="Right"/>
+            <Setter Property="OpenPaneLength" Value="200"/>
+            <Setter Property="CompactPaneLength" Value="50"/>
+        </Style>
+        <Style Selector="Grid">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="ColumnSpacing" Value="8"/>
+            <Setter Property="RowSpacing" Value="8"/>
+        </Style>
+        <Style Selector="DockPanel">
+            <Setter Property="LastChildFill" Value="True"/>
+        </Style>
+    </Window.Styles>
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -18,71 +37,87 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <!--<TabControl>
-        ~1~ Our Simple ViewModel @1@
-        <TabItem Header="Simple ViewModel" >
-            <StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
-                <TextBlock>Enter your Name:</TextBlock>
-                <TextBox Text="{Binding Name}" />
-                <TextBox Text="{Binding Greeting, Mode=OneWay}"
-                         IsReadOnly="True"
-                         FontWeight="Bold" />
-            </StackPanel>
-        </TabItem>
-
-        ~1~ Our ReactiveViewModel @1@
-        <TabItem Header="Reactive UI" >
-            <StackPanel DataContext="{Binding ReactiveViewModel}" Spacing="10">
-                <TextBlock>Enter your Name:</TextBlock>
-                <TextBox Text="{Binding Name}" />
-                <TextBox Text="{Binding Greeting, Mode=OneWay}"
-                         IsReadOnly="True"
-                         FontWeight="Bold" />
-            </StackPanel>
-        </TabItem>
-    </TabControl>-->
-    
-    <StackPanel Orientation="Vertical" Spacing="8">
-        <TextBox Height="60" 
-                 FontSize="30" FontWeight="Bold" 
-                 IsReadOnly="True"/>
-        <TextBox Height="40"
-                 FontSize="24" FontWeight="Bold" />
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
-              ColumnDefinitions="Auto,Auto,Auto,Auto"
-              ColumnSpacing="8" RowSpacing="8">
-            <Button Grid.Row="0" Grid.Column="0" Content="7" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="0" Grid.Column="1" Content="8" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="0" Grid.Column="2" Content="9" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="0" Grid.Column="3" Content="/" FontSize="20" FontWeight="Bold" Height="60"/>
-
-            <Button Grid.Row="1" Grid.Column="0" Content="4" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="1" Grid.Column="1" Content="5" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="1" Grid.Column="2" Content="6" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="1" Grid.Column="3" Content="*" FontSize="20" FontWeight="Bold" Height="60"/>
-
-            <Button Grid.Row="2" Grid.Column="0" Content="1" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="2" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="2" Grid.Column="2" Content="3" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="2" Grid.Column="3" Content="-" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="3" Grid.Column="0" Content="0" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="3" Grid.Column="1" Content="." FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="3" Grid.Column="2" Content="=" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="3" Grid.Column="3" Content="+" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="4" Grid.Column="0" Content="C" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="4" Grid.Column="1" Content="CE" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="4" Grid.Column="2" Content="DEL" FontSize="20" FontWeight="Bold" Height="60"/>
-            <Button Grid.Row="4" Grid.Column="3" Content="±" FontSize="20" FontWeight="Bold" Height="60"/>
-        </Grid>
-        <Expander FontSize="20" FontWeight="Bold">
-            <Expander.Header>
-                History
-            </Expander.Header>
-            <ListBox Height="100">
-                <ListBoxItem Content="History Item 1"/>
-                <ListBoxItem Content="History Item 2"/>
-                <ListBoxItem Content="History Item 3"/>
-            </ListBox>
-        </Expander>
-    </StackPanel>
+    <SplitView Name="Overlay">
+        <!-- Overlay Panel -->
+        <SplitView.Pane>
+            <Grid RowDefinitions="50,*,50" ColumnDefinitions="50,*">
+                <Button Name="BtnHistory"
+                        Grid.Row="0" Grid.Column="0" 
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Margin="8"
+                        Content="≡"
+                        FontSize="24"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Center">
+                    History
+                </TextBlock>
+                <ListBox Name="ListHistory"
+                         Grid.Row ="1" Grid.Column="1"
+                         SelectionMode="Single"
+                         IsVisible="False">
+                    
+                </ListBox>
+                <Button Name="BtnClearHistory"
+                        Grid.Row="2" Grid.Column="1" 
+                        HorizontalAlignment="Stretch"
+                        Margin="8"
+                        Content="Clear History"
+                        FontSize="24"
+                        Background="Red"/>
+            </Grid>
+        </SplitView.Pane>
+        <!-- Main Panel -->
+        <DockPanel>
+            <DockPanel.Styles>
+                <Style Selector="TextBox">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                    <Setter Property="DockPanel.Dock" Value="Top"/>
+                    <Setter Property="Margin" Value="0,0,0,8"/>
+                </Style>
+            </DockPanel.Styles>
+            <!-- Display boxes -->
+            <TextBox Name="TbResult" FontSize="40" IsReadOnly="True"/>
+            <TextBox Name="TbInput" FontSize="24" />
+            <!-- Buttons -->
+            <Grid RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*,*,*">
+                <Grid.Styles>
+                    <Style Selector="Button">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalAlignment" Value="Stretch"/>
+                        <Setter Property="FontSize" Value="20"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="MinWidth" Value="60"/>
+                        <Setter Property="MinHeight" Value="60"/>
+                    </Style>
+                </Grid.Styles>
+                <!-- clear buttons -->
+                <Button Grid.Row="0" Grid.Column="0" Content="C" Name="BtnClear"/>
+                <Button Grid.Row="0" Grid.Column="1" Content="CE" Name="BtnClearEntry" />
+                <Button Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Content="DEL" Name="BtnBackSpace"/>
+                <!-- numbers button  -->
+                <Button Grid.Row="1" Grid.Column="0" Content="7" Name="Btn7"/>
+                <Button Grid.Row="1" Grid.Column="1" Content="8" Name="Btn8"/>
+                <Button Grid.Row="1" Grid.Column="2" Content="9" Name="Btn9"/>
+                <Button Grid.Row="2" Grid.Column="0" Content="4" Name="Btn4"/>
+                <Button Grid.Row="2" Grid.Column="1" Content="5" Name="Btn5"/>
+                <Button Grid.Row="2" Grid.Column="2" Content="6" Name="Btn6"/>
+                <Button Grid.Row="3" Grid.Column="0" Content="1" Name="Btn1"/>
+                <Button Grid.Row="3" Grid.Column="1" Content="2" Name="Btn2"/>
+                <Button Grid.Row="3" Grid.Column="2" Content="3" Name="Btn3"/>
+                <Button Grid.Row="4" Grid.Column="1" Content="0" Name="Btn0"/>
+                <!-- operator and parenthesis and decimal button -->
+                <Button Grid.Row="4" Grid.Column="0" Content="." Name="BtnDecimal"/>
+                <Button Grid.Row="1" Grid.Column="3" Content="/" Name="BtnDivide"/>
+                <Button Grid.Row="2" Grid.Column="3" Content="*" Name="BtnMultiply"/>
+                <Button Grid.Row="3" Grid.Column="3" Content="-" Name="BtnSubtract"/>
+                <Button Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Content="+" Name="BtnAdd"/>
+                <Button Grid.Row="5" Grid.Column="0" Content="(" Name="BtnOpen"/>
+                <Button Grid.Row="5" Grid.Column="1" Content=")" Name="BtnClose"/>
+                <Button Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Content="=" Name="BtnEquals"/>
+            </Grid>
+        </DockPanel>
+    </SplitView>
 </Window>
