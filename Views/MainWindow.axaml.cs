@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Metadata;
 
 namespace Tabada_IntSys1_Calculator.Views;
 
@@ -11,6 +12,8 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
+        SizeChanged += OnSizeChanged;
+            
         // History and clear buttons
         BtnHistory.Click += BtnHistory_Click;
         BtnClearHistory.Click += BtnClearHistory_Click;
@@ -46,6 +49,34 @@ public partial class MainWindow : Window
         // Equals Button
         BtnEquals.Click += BtnEquals_Click;
     }
+    
+    // helper method to calculate the result of the expression in the input textbox
+    private void Calculate()
+    {
+        try
+        {
+            var computeResult = new DataTable().Compute(TbInput.Text, "");
+            TbResult.Text = ToEightDecimalPlaces(computeResult);
+        }
+        catch (Exception)
+        {
+            TbResult.Text = String.Empty;
+        }
+    }
+    private string ToEightDecimalPlaces(object input)
+    {
+        if (double.TryParse(input.ToString(), out double num))
+            return Math.Round(num, 8).ToString();
+        return input.ToString();
+    }
+    // sets the width of the overlay to 50% of the panel size + 50 for the close panel of the window width
+    private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
+    {
+        if (Overlay.IsPaneOpen)
+        {
+            Overlay.OpenPaneLength = Bounds.Width * 0.5 + 50; 
+        }
+    }
     private void BtnHistory_Click(object? sender, RoutedEventArgs e)
     {
         Overlay.IsPaneOpen = !Overlay.IsPaneOpen;
@@ -60,6 +91,9 @@ public partial class MainWindow : Window
         {
             TbInput.Text += button.Content.ToString();
         }
+        
+        // Calculate the result in real-time as numbers are entered
+        Calculate();
     }
     private void OperatorButton_Click(object? sender, RoutedEventArgs e)
     {
@@ -67,19 +101,31 @@ public partial class MainWindow : Window
         {
             TbInput.Text += button.Content.ToString();
         }
+        Calculate();
     }
     private void BtnEquals_Click(object? sender, RoutedEventArgs e)
     {
+        object result;
         try
         {
             // Calculate the result
-            var result = new DataTable().Compute(TbInput.Text, "").ToString();
-            TbResult.Text = result;
-            
+            result = new DataTable().Compute(TbInput.Text, "");
+            string text = ToEightDecimalPlaces(result);
+            TbResult.Text = text;
+
+            // Avoid adding duplicate entries to history
+            if (text!.Equals(TbInput.Text) || string.IsNullOrEmpty(text))
+            {
+                return;
+            }
+
             // Add to history
-            var historyItem = $"{TbInput.Text} = {result}";
+            var historyItem = $"{TbInput.Text} \n= {text}";
             ListHistory.Items.Add(historyItem);
             ListHistory.IsVisible = true;
+            
+            // Update the input textbox with the result
+            TbInput.Text = text;
         }
         catch (Exception ex)
         {
@@ -101,6 +147,7 @@ public partial class MainWindow : Window
         {
             TbInput.Text = TbInput.Text.Remove(TbInput.Text.Length - 1);
         }
+        Calculate();
     }
     private void DecimalButton_Click(object? sender, RoutedEventArgs e)
     {

@@ -3,7 +3,7 @@
         xmlns:vm="using:Tabada_IntSys1_Calculator.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="400"
+        mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="400"
         x:CompileBindings="True"
         MinHeight="550" MinWidth="400"
         SizeToContent="WidthAndHeight" Padding="8" FontFamily="Microsoft Sans Serif"
@@ -17,7 +17,7 @@
         <Style Selector="SplitView">
             <Setter Property="DisplayMode" Value="CompactOverlay"/>
             <Setter Property="PanePlacement" Value="Right"/>
-            <Setter Property="OpenPaneLength" Value="200"/>
+            <Setter Property="OpenPaneLength" Value="275"/>
             <Setter Property="CompactPaneLength" Value="50"/>
         </Style>
         <Style Selector="Grid">
@@ -50,21 +50,34 @@
                         Margin="8">
                     <Image Source="/Assets/list-icon.ico"/>
                 </Button>
-                <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Center">
+                <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Center"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           FontSize="24" FontWeight="Bold"
+                           Margin="0,0,16,0">
                     History
                 </TextBlock>
                 <ListBox Name="ListHistory"
                          Grid.Row ="1" Grid.Column="1"
-                         SelectionMode="Single">
-                    
+                         Background="Beige"
+                         Foreground="Black"
+                         FontSize="18"
+                         Margin="0,0,16,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding .}" TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
                 <Button Name="BtnClearHistory"
                         Grid.Row="2" Grid.Column="1" 
                         HorizontalAlignment="Stretch"
-                        Margin="8"
+                        Background="Red"
                         Content="Clear History"
-                        FontSize="24"
-                        Background="Red"/>
+                        FontSize="20"
+                        HorizontalContentAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="Beige"
+                        Margin="0,0,16,0"/>
             </Grid>
         </SplitView.Pane>
         <!-- Main Panel -->
