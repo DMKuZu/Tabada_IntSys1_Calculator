@@ -3,6 +3,7 @@ using System.Data;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Metadata;
+using Avalonia.Input; // <-- Add this for KeyEventArgs
 
 namespace Tabada_IntSys1_Calculator.Views;
 
@@ -48,6 +49,9 @@ public partial class MainWindow : Window
         
         // Equals Button
         BtnEquals.Click += BtnEquals_Click;
+
+        // Keyboard mapping
+        this.KeyDown += MainWindow_KeyDown;
     }
     
     // helper method to calculate the result of the expression in the input textbox
@@ -186,5 +190,145 @@ public partial class MainWindow : Window
             // Add the parenthesis character to the expression
             TbInput.Text += button.Content.ToString();
         }
+    }
+    // keybinds for calculator buttons
+    private void MainWindow_KeyDown(object? sender, KeyEventArgs e)
+    {
+        bool handled = false;
+        switch (e.Key)
+        {
+            case Key.D0:
+                if (e.KeyModifiers == KeyModifiers.Shift)
+                {
+                    BtnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); // Shift+0 = ')'
+                    handled = true;
+                }
+                else
+                {
+                    Btn0.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    handled = true;
+                }
+                break;
+            case Key.NumPad0:
+                Btn0.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.D1:
+            case Key.NumPad1:
+                Btn1.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.D2:
+            case Key.NumPad2:
+                Btn2.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.D3:
+            case Key.NumPad3:
+                Btn3.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.D4:
+            case Key.NumPad4:
+                Btn4.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.D5:
+            case Key.NumPad5:
+                Btn5.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.D6:
+            case Key.NumPad6:
+                Btn6.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.D7:
+            case Key.NumPad7:
+                Btn7.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.D8:
+                if (e.KeyModifiers == KeyModifiers.Shift)
+                {
+                    BtnMultiply.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); // Shift+8 = '*'
+                    handled = true;
+                }
+                else
+                {
+                    Btn8.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    handled = true;
+                }
+                break;
+            case Key.NumPad8:
+                Btn8.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.D9:
+                if (e.KeyModifiers == KeyModifiers.Shift)
+                {
+                    BtnOpen.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); // Shift+9 = '('
+                    handled = true;
+                }
+                else
+                {
+                    Btn9.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    handled = true;
+                }
+                break;
+            case Key.NumPad9:
+                Btn9.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.Add:
+            case Key.OemPlus:
+                BtnAdd.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.Subtract:
+            case Key.OemMinus:
+                BtnSubtract.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.Multiply:
+                BtnMultiply.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.Divide:
+                BtnDivide.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.Oem2: // '/' on main keyboard
+                BtnDivide.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.Decimal:
+            case Key.OemPeriod:
+                BtnDecimal.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.OemOpenBrackets:
+                BtnOpen.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.Oem6: // ')'
+                BtnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.Return:
+                BtnEquals.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.Back:
+                BtnBackSpace.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+            case Key.Oem5: // '\' key
+                BtnHistory.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                handled = true;
+                break;
+        }
+        if (handled)
+            e.Handled = true;
     }
 }

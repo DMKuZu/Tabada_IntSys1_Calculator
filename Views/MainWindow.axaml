@@ -42,12 +42,13 @@
         <SplitView.Pane>
             <Grid RowDefinitions="50,*,50" ColumnDefinitions="50,*">
                 <Button Name="BtnHistory"
-                        Grid.Row="0" Grid.Column="0" 
+                        Grid.Row="0" Grid.Column="0"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Left"
                         VerticalContentAlignment="Center"
                         HorizontalContentAlignment="Center"
-                        Margin="8">
+                        Margin="8"
+                        ToolTip.Tip="click \ to toggle history panel">
                     <Image Source="/Assets/list-icon.ico"/>
                 </Button>
                 <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Center"
@@ -69,7 +70,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <Button Name="BtnClearHistory"
-                        Grid.Row="2" Grid.Column="1" 
+                        Grid.Row="2" Grid.Column="1"
                         HorizontalAlignment="Stretch"
                         Background="Red"
                         Content="Clear History"
